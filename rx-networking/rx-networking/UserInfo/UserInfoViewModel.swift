@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import UIKit
 import RxCocoa
 
 class UserInfoViewModel {
@@ -17,6 +18,7 @@ class UserInfoViewModel {
 
     struct Output {
         let user: Driver<GitHubUser?>
+        let avatarImage: Driver<UIImage>
     }
 
     private let model: UserInfoModel
@@ -40,8 +42,13 @@ class UserInfoViewModel {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }).asDriver(onErrorJustReturn: ()).drive().disposed(by: self.disposeBag)
 
+        let imageSubject = model.fetchImage(for: self.model.selectedUser.avatar_url)
+
         self.input = Input(linkTapTrigger: linkTapSubjet.asObserver())
-        self.output = Output(user: userSubject.asDriver(onErrorJustReturn: nil))
+        self.output = Output(
+            user: userSubject.asDriver(onErrorJustReturn: nil),
+            avatarImage: imageSubject.asDriver(onErrorJustReturn: UIImage())
+        )
     }
 
 }

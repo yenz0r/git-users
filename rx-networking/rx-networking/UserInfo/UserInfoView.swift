@@ -58,9 +58,8 @@ class UserInfoView: UIViewController {
         self.avatarContainerView.addSubview(self.avatarImageView)
         self.avatarImageView.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.top.leading.greaterThanOrEqualToSuperview()
-            make.bottom.trailing.lessThanOrEqualToSuperview()
-            make.width.equalTo(self.avatarImageView.snp.height)
+            make.width.equalToSuperview()
+            make.height.equalTo(self.avatarImageView.snp.width)
         }
     }
 
@@ -95,8 +94,11 @@ class UserInfoView: UIViewController {
             strongSelf.loginLabel.text = user.login
             strongSelf.typeLabel.text = user.type
             strongSelf.linkLabel.text = user.html_url
-            strongSelf.avatarImageView.backgroundColor = .orange
             print(user.login)
+        }.disposed(by: self.disposeBag)
+
+        self.viewModel.output.avatarImage.asObservable().bind { [weak self] image -> Void in
+            self?.avatarImageView.image = image
         }.disposed(by: self.disposeBag)
 
         self.linkTapSubject
