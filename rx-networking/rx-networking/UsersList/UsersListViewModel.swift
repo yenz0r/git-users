@@ -42,7 +42,6 @@ class UsersListViewModel {
             })
             .do(onNext: {
                 guard let user = $0 else { return }
-                print(user)
                 router.showUserInfo(for: user)
             })
             .asDriver(onErrorJustReturn: nil)

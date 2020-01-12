@@ -17,8 +17,8 @@ class UserInfoModel {
         self.selectedUser = user
     }
 
-    func fetchImage(for path: String) -> PublishSubject<UIImage> {
-        let imageSubject = PublishSubject<UIImage>()
+    func fetchImage(for path: String) -> ReplaySubject<UIImage> {
+        let imageSubject = ReplaySubject<UIImage>.create(bufferSize: 1)
         if let url = URL(string: path) {
             let imageRequest = ImageRequest(url: url)
             if let cachedImage = ImageCache.shared[imageRequest] {

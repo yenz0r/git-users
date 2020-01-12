@@ -90,11 +90,10 @@ class UserInfoView: UIViewController {
 
     private func bindViewModel() {
         self.viewModel.output.user.asObservable().bind { [weak self] user -> Void in
-            guard let user = user, let strongSelf = self else { print("gg"); return }
+            guard let user = user, let strongSelf = self else { return }
             strongSelf.loginLabel.text = user.login
             strongSelf.typeLabel.text = user.type
             strongSelf.linkLabel.text = user.html_url
-            print(user.login)
         }.disposed(by: self.disposeBag)
 
         self.viewModel.output.avatarImage.asObservable().bind { [weak self] image -> Void in
