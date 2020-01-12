@@ -15,6 +15,8 @@ class UsersListView: UIViewController {
     private var tableView: UITableView!
     private var savedBarItem: UIBarButtonItem!
 
+    private let search = BehaviorRelay(value: "")
+
     var viewModel: UsersListViewModel!
 
     private let disposeBag = DisposeBag()
@@ -30,6 +32,11 @@ class UsersListView: UIViewController {
 
         self.savedBarItem = UIBarButtonItem(title: "Saved", style: .plain, target: nil, action: nil)
         self.navigationItem.rightBarButtonItem = self.savedBarItem
+
+        let search = UISearchController(searchResultsController: nil)
+        definesPresentationContext = true
+        search.searchResultsUpdater = self
+        self.navigationItem.searchController = search
     }
 
     override func viewDidLoad() {
@@ -39,10 +46,6 @@ class UsersListView: UIViewController {
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 
         self.bindViewModel()
-    }
-
-    @objc private func savedButtonTapped() {
-        // todo
     }
 
     private func bindViewModel() {
@@ -57,6 +60,9 @@ class UsersListView: UIViewController {
         self.tableView
             .rx
             .itemSelected
+            .do(onNext: { [weak self] indexPath in
+                self?.tableView.deselectRow(at: indexPath, animated: true)
+            })
             .bind(to: self.viewModel.input.selectTrigger)
             .disposed(by: self.disposeBag)
 
@@ -65,5 +71,15 @@ class UsersListView: UIViewController {
             .tap
             .bind(to: self.viewModel.input.savedItemTrigger)
             .disposed(by: self.disposeBag)
+
+        self.search
+            .bind(to: viewModel.input.searchTrigger)
+            .disposed(by: disposeBag)
+    }
+}
+
+extension UsersListView: UISearchResultsUpdating {
+    public func updateSearchResults(for searchController: UISearchController) {
+        self.search.accept(searchController.searchBar.text ?? "")
     }
 }

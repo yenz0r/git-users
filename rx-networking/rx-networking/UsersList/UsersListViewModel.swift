@@ -18,6 +18,7 @@ class UsersListViewModel {
     struct Input {
         let selectTrigger: AnyObserver<IndexPath>
         let savedItemTrigger: AnyObserver<Void>
+        let searchTrigger: AnyObserver<String>
     }
 
     let output: Output
@@ -32,7 +33,19 @@ class UsersListViewModel {
         self.model = model
         self.router = router
 
-        let users = self.model.fetchUsers().share(replay: 1)
+        let users = model.fetchUsers().share(replay: 1)
+
+        let searchSubject = PublishSubject<String>()
+        let search = searchSubject
+            .startWith("")
+            .distinctUntilChanged()
+            .throttle(1.0, scheduler: MainScheduler.instance)
+
+        let filteredItems = Observable
+        .combineLatest(users, search) { items, filter in
+            items.filter { $0.login.lowercased().hasPrefix(filter.lowercased()) }
+        }
+        .asDriver(onErrorJustReturn: [])
 
         let selectSubject = PublishSubject<IndexPath>()
         selectSubject
@@ -57,7 +70,11 @@ class UsersListViewModel {
             .drive()
             .disposed(by: self.disposeBag)
 
-        self.input = Input(selectTrigger: selectSubject.asObserver(), savedItemTrigger: savedItemSubject.asObserver())
-        self.output = Output(users: users.asDriver(onErrorJustReturn: []))
+        self.input = Input(
+            selectTrigger: selectSubject.asObserver(),
+            savedItemTrigger: savedItemSubject.asObserver(),
+            searchTrigger: searchSubject.asObserver()
+        )
+        self.output = Output(users: filteredItems.asDriver(onErrorJustReturn: []))
     }
 }

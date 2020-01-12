@@ -30,8 +30,10 @@ class SavedUsersView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        self.navigationItem.title = "Saved Users"
 
         self.tableView.register(SavedUserCell.self, forCellReuseIdentifier: "savedUserCell")
+        self.tableView.tableFooterView = UIView()
 
         self.bindViewModel()
     }
