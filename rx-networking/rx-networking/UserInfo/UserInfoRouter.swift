@@ -16,4 +16,8 @@ class UserInfoRouter {
         self.view = view
     }
 
+    func showHtmlProfile(for path: String) {
+        guard let url = URL(string: path)  else { return }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
 }

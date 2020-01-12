@@ -11,10 +11,16 @@ import Nuke
 import RxSwift
 
 class UserInfoModel {
-    let selectedUser: GitHubUser
+    private let user: GitHubUser
+    private let usersRepository: UsersRepository
+
+    var selectedUser: GitHubUser {
+        return self.user
+    }
 
     init(for user: GitHubUser) {
-        self.selectedUser = user
+        self.user = user
+        self.usersRepository = UsersRepository()
     }
 
     func fetchImage(for path: String) -> ReplaySubject<UIImage> {
@@ -32,5 +38,9 @@ class UserInfoModel {
             }
         }
         return imageSubject
+    }
+
+    func saveUser(_ user: GitHubUser) {
+        self.usersRepository.saveUser(from: user)
     }
 }

@@ -18,6 +18,8 @@ class UserInfoView: UIViewController {
     private var typeLabel: UILabel!
     private var linkLabel: UILabel!
 
+    private var saveBarItem: UIBarButtonItem!
+
     private let linkTapSubject = PublishSubject<Void>()
     private let disposeBag = DisposeBag()
     var viewModel: UserInfoViewModel!
@@ -61,6 +63,9 @@ class UserInfoView: UIViewController {
             make.width.equalToSuperview()
             make.height.equalTo(self.avatarImageView.snp.width)
         }
+
+        self.saveBarItem = UIBarButtonItem(barButtonSystemItem: .add, target: nil, action: nil)
+        self.navigationItem.rightBarButtonItem = self.saveBarItem
     }
 
     override func viewDidLoad() {
@@ -102,6 +107,12 @@ class UserInfoView: UIViewController {
 
         self.linkTapSubject
             .bind(to: self.viewModel.input.linkTapTrigger)
+            .disposed(by: self.disposeBag)
+
+        self.saveBarItem
+            .rx
+            .tap
+            .bind(to: self.viewModel.input.saveItemTapTrigger)
             .disposed(by: self.disposeBag)
     }
 }

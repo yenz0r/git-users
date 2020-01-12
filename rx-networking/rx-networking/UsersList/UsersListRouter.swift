@@ -16,16 +16,28 @@ class UsersListRouter {
         self.view = view
     }
 
+    func showSavedUsers() {
+        guard let parentView = self.view else { return }
+
+        let savedUsersView = SavedUsersView()
+        let savedUsersModel = SavedUsersModel()
+        let savedUsersViewModel = SavedUsersViewModel(model: savedUsersModel)
+
+        savedUsersView.viewModel = savedUsersViewModel
+
+        parentView.navigationController?.pushViewController(savedUsersView, animated: true)
+    }
+
     func showUserInfo(for user: GitHubUser) {
         guard let parentView = self.view else { return }
 
-        let view = UserInfoView()
-        let model = UserInfoModel(for: user)
-        let router = UserInfoRouter(view: view)
-        let viewModel = UserInfoViewModel(model: model, router: router)
+        let userInfoView = UserInfoView()
+        let userInfoModel = UserInfoModel(for: user)
+        let userInfoRouter = UserInfoRouter(view: userInfoView)
+        let userInfoViewModel = UserInfoViewModel(model: userInfoModel, router: userInfoRouter)
 
-        view.viewModel = viewModel
+        userInfoView.viewModel = userInfoViewModel
 
-        parentView.navigationController?.pushViewController(view, animated: true)
+        parentView.navigationController?.pushViewController(userInfoView, animated: true)
     }
 }

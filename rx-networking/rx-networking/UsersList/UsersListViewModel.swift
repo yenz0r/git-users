@@ -17,6 +17,7 @@ class UsersListViewModel {
 
     struct Input {
         let selectTrigger: AnyObserver<IndexPath>
+        let savedItemTrigger: AnyObserver<Void>
     }
 
     let output: Output
@@ -48,7 +49,15 @@ class UsersListViewModel {
             .drive()
             .disposed(by: self.disposeBag)
 
-        self.input = Input(selectTrigger: selectSubject.asObserver())
+        let savedItemSubject = PublishSubject<Void>()
+        savedItemSubject
+            .asObserver()
+            .do(onNext: { router.showSavedUsers() })
+            .asDriver(onErrorJustReturn: ())
+            .drive()
+            .disposed(by: self.disposeBag)
+
+        self.input = Input(selectTrigger: selectSubject.asObserver(), savedItemTrigger: savedItemSubject.asObserver())
         self.output = Output(users: users.asDriver(onErrorJustReturn: []))
     }
 }

@@ -21,6 +21,12 @@
 		B91122E023C952A000BB8230 /* UserInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91122DF23C952A000BB8230 /* UserInfoModel.swift */; };
 		B91122E223CA074300BB8230 /* UserInfoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91122E123CA074300BB8230 /* UserInfoRouter.swift */; };
 		B91122E423CA07BE00BB8230 /* UsersListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91122E323CA07BE00BB8230 /* UsersListRouter.swift */; };
+		B990F3D823CB40B200EDBD80 /* UsersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B990F3D723CB40B200EDBD80 /* UsersRepository.swift */; };
+		B990F3DC23CB413E00EDBD80 /* SavedUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B990F3DB23CB413E00EDBD80 /* SavedUser.swift */; };
+		B990F3DE23CB452200EDBD80 /* SavedUsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B990F3DD23CB452200EDBD80 /* SavedUsersView.swift */; };
+		B990F3E023CB452E00EDBD80 /* SavedUsersModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B990F3DF23CB452E00EDBD80 /* SavedUsersModel.swift */; };
+		B990F3E223CB453600EDBD80 /* SavedUsersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B990F3E123CB453600EDBD80 /* SavedUsersViewModel.swift */; };
+		B990F3E523CB477900EDBD80 /* SavedUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B990F3E423CB477900EDBD80 /* SavedUserCell.swift */; };
 		F6B96C2B797B5D3B936881E3 /* Pods_rx_networking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23D0C0CB18BA2DF158C6A647 /* Pods_rx_networking.framework */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +50,12 @@
 		B91122DF23C952A000BB8230 /* UserInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoModel.swift; sourceTree = "<group>"; };
 		B91122E123CA074300BB8230 /* UserInfoRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoRouter.swift; sourceTree = "<group>"; };
 		B91122E323CA07BE00BB8230 /* UsersListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersListRouter.swift; sourceTree = "<group>"; };
+		B990F3D723CB40B200EDBD80 /* UsersRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersRepository.swift; sourceTree = "<group>"; };
+		B990F3DB23CB413E00EDBD80 /* SavedUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedUser.swift; sourceTree = "<group>"; };
+		B990F3DD23CB452200EDBD80 /* SavedUsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedUsersView.swift; sourceTree = "<group>"; };
+		B990F3DF23CB452E00EDBD80 /* SavedUsersModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedUsersModel.swift; sourceTree = "<group>"; };
+		B990F3E123CB453600EDBD80 /* SavedUsersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedUsersViewModel.swift; sourceTree = "<group>"; };
+		B990F3E423CB477900EDBD80 /* SavedUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedUserCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,9 +110,10 @@
 			children = (
 				B91122B923C9372800BB8230 /* AppDelegate.swift */,
 				B91122BB23C9372800BB8230 /* SceneDelegate.swift */,
-				B91122DB23C94FAA00BB8230 /* UserInfo */,
 				B91122D823C94F5100BB8230 /* UsersList */,
-				B91122DC23C9500400BB8230 /* Networking */,
+				B91122DB23C94FAA00BB8230 /* UserInfo */,
+				B990F3E323CB453B00EDBD80 /* SavedUsers */,
+				B990F3DA23CB40CC00EDBD80 /* Utils */,
 				B91122C223C9372900BB8230 /* Assets.xcassets */,
 				B91122C423C9372900BB8230 /* LaunchScreen.storyboard */,
 				B91122C723C9372900BB8230 /* Info.plist */,
@@ -137,6 +150,43 @@
 				B91122D123C93C1500BB8230 /* GitHubUser.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		B990F3D923CB40C100EDBD80 /* Storange */ = {
+			isa = PBXGroup;
+			children = (
+				B990F3D723CB40B200EDBD80 /* UsersRepository.swift */,
+				B990F3DB23CB413E00EDBD80 /* SavedUser.swift */,
+			);
+			path = Storange;
+			sourceTree = "<group>";
+		};
+		B990F3DA23CB40CC00EDBD80 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				B990F3D923CB40C100EDBD80 /* Storange */,
+				B91122DC23C9500400BB8230 /* Networking */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		B990F3E323CB453B00EDBD80 /* SavedUsers */ = {
+			isa = PBXGroup;
+			children = (
+				B990F3DD23CB452200EDBD80 /* SavedUsersView.swift */,
+				B990F3DF23CB452E00EDBD80 /* SavedUsersModel.swift */,
+				B990F3E123CB453600EDBD80 /* SavedUsersViewModel.swift */,
+				B990F3E623CB477D00EDBD80 /* UI */,
+			);
+			path = SavedUsers;
+			sourceTree = "<group>";
+		};
+		B990F3E623CB477D00EDBD80 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				B990F3E423CB477900EDBD80 /* SavedUserCell.swift */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -253,15 +303,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B990F3E523CB477900EDBD80 /* SavedUserCell.swift in Sources */,
 				B91122BA23C9372800BB8230 /* AppDelegate.swift in Sources */,
 				B91122BC23C9372800BB8230 /* SceneDelegate.swift in Sources */,
+				B990F3DC23CB413E00EDBD80 /* SavedUser.swift in Sources */,
 				B91122DE23C9528A00BB8230 /* UserInfoViewModel.swift in Sources */,
 				B91122D223C93C1500BB8230 /* GitHubUser.swift in Sources */,
 				B91122E023C952A000BB8230 /* UserInfoModel.swift in Sources */,
+				B990F3E023CB452E00EDBD80 /* SavedUsersModel.swift in Sources */,
 				B91122DA23C94F6600BB8230 /* UserInfoView.swift in Sources */,
 				B91122D423C9424A00BB8230 /* UsersListViewModel.swift in Sources */,
 				B91122E423CA07BE00BB8230 /* UsersListRouter.swift in Sources */,
+				B990F3D823CB40B200EDBD80 /* UsersRepository.swift in Sources */,
+				B990F3E223CB453600EDBD80 /* SavedUsersViewModel.swift in Sources */,
 				B91122D023C9390700BB8230 /* UsersListModel.swift in Sources */,
+				B990F3DE23CB452200EDBD80 /* SavedUsersView.swift in Sources */,
 				B91122CE23C9383000BB8230 /* GitHubApi.swift in Sources */,
 				B91122E223CA074300BB8230 /* UserInfoRouter.swift in Sources */,
 				B91122D623C9436E00BB8230 /* UsersListView.swift in Sources */,

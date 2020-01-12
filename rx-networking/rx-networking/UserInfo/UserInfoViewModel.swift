@@ -14,6 +14,7 @@ import RxCocoa
 class UserInfoViewModel {
     struct Input {
         let linkTapTrigger: AnyObserver<Void>
+        let saveItemTapTrigger: AnyObserver<Void>
     }
 
     struct Output {
@@ -36,15 +37,26 @@ class UserInfoViewModel {
         let userSubject = BehaviorSubject<GitHubUser?>(value: self.model.selectedUser)
 
         let linkTapSubjet = PublishSubject<Void>()
-        let userHtmlPath = self.model.selectedUser.html_url
-        linkTapSubjet.asObserver().do(onNext: {
-            guard let url = URL(string: userHtmlPath)  else { return }
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        linkTapSubjet
+            .asObserver()
+            .do(onNext: {
+            router.showHtmlProfile(for: model.selectedUser.html_url)
         }).asDriver(onErrorJustReturn: ()).drive().disposed(by: self.disposeBag)
 
         let imageSubject = model.fetchImage(for: self.model.selectedUser.avatar_url)
 
-        self.input = Input(linkTapTrigger: linkTapSubjet.asObserver())
+        let saveItemSubject = PublishSubject<Void>()
+        saveItemSubject
+            .asObserver()
+            .do(onNext: { model.saveUser(model.selectedUser) })
+            .asDriver(onErrorJustReturn: ())
+            .drive()
+            .disposed(by: self.disposeBag)
+
+        self.input = Input(
+            linkTapTrigger: linkTapSubjet.asObserver(),
+            saveItemTapTrigger: saveItemSubject.asObserver()
+        )
         self.output = Output(
             user: userSubject.asDriver(onErrorJustReturn: nil),
             avatarImage: imageSubject.asDriver(onErrorJustReturn: UIImage())

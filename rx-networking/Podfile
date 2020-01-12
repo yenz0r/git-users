@@ -11,5 +11,6 @@ target 'rx-networking' do
   pod 'Moya/RxSwift'
   pod 'SnapKit'
   pod 'Nuke'
+  pod 'RxRealm'
 
 end

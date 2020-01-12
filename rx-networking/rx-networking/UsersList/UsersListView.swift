@@ -13,6 +13,7 @@ import SnapKit
 
 class UsersListView: UIViewController {
     private var tableView: UITableView!
+    private var savedBarItem: UIBarButtonItem!
 
     var viewModel: UsersListViewModel!
 
@@ -26,6 +27,9 @@ class UsersListView: UIViewController {
         self.tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+
+        self.savedBarItem = UIBarButtonItem(title: "Saved", style: .plain, target: nil, action: nil)
+        self.navigationItem.rightBarButtonItem = self.savedBarItem
     }
 
     override func viewDidLoad() {
@@ -35,6 +39,10 @@ class UsersListView: UIViewController {
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 
         self.bindViewModel()
+    }
+
+    @objc private func savedButtonTapped() {
+        // todo
     }
 
     private func bindViewModel() {
@@ -50,6 +58,12 @@ class UsersListView: UIViewController {
             .rx
             .itemSelected
             .bind(to: self.viewModel.input.selectTrigger)
+            .disposed(by: self.disposeBag)
+
+        self.savedBarItem
+            .rx
+            .tap
+            .bind(to: self.viewModel.input.savedItemTrigger)
             .disposed(by: self.disposeBag)
     }
 }
